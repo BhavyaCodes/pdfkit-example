@@ -17,21 +17,26 @@ app.get('/',(req,res)=>{
 })
 
 app.post('/formsubmit', async (req,res)=>{
-    const fileName = uuid.v1()
-    const filePath = path.join("temp",fileName)
-    const pdfDoc = new PDFDocument()
-    res.setHeader('Content-Type','application/pdf')
-    res.setHeader('Content-Diposition',`inline; filename = ${req.body.name}`)
-    pdfDoc.pipe(fs.createWriteStream(filePath))
-    pdfDoc.pipe(res)
-    pdfDoc.fontSize(24).text(`Hello ${req.body.name}`)
-    pdfDoc.fontSize(32).text('You are awesome!')
-    await pdfDoc.end()
-    fs.unlink(filePath,(err)=>{
-        if(err){
-            console.log(err)
-        }
-    })
+    try{
+        const fileName = uuid.v1()
+        const filePath = path.join("temp",fileName)
+        const pdfDoc = new PDFDocument()
+        res.setHeader('Content-Type','application/pdf')
+        res.setHeader('Content-Diposition',`inline; filename = ${req.body.name}`)
+        pdfDoc.pipe(fs.createWriteStream(filePath))
+        pdfDoc.pipe(res)
+        pdfDoc.fontSize(24).text(`Hello ${req.body.name}`)
+        pdfDoc.fontSize(32).text('You are awesome!')
+        await pdfDoc.end()
+        fs.unlink(filePath,(err)=>{
+            if(err){
+                console.log(err)
+                throw (err)
+            }
+        })
+    } catch(e){
+        console.log(e)
+    }
 })
 
 app.use((req,res)=>{
