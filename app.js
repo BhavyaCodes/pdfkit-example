@@ -19,7 +19,7 @@ app.get('/',(req,res)=>{
 app.post('/formsubmit', async (req,res)=>{
     try{
         const fileName = uuid.v1()
-        const filePath = path.join("temp",fileName)
+        const filePath = path.join(__dirname, "temp",fileName)
         const pdfDoc = new PDFDocument()
         res.setHeader('Content-Type','application/pdf')
         res.setHeader('Content-Diposition',`inline; filename = ${req.body.name}`)
