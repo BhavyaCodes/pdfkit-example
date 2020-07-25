@@ -22,7 +22,7 @@ app.post('/formsubmit', async (req,res)=>{
         const filePath = path.join(__dirname, "temp",fileName)
         const pdfDoc = new PDFDocument()
         res.setHeader('Content-Type','application/pdf')
-        res.setHeader('Content-Diposition',`inline; filename = ${req.body.name}`)
+        res.setHeader('Content-Disposition',`inline; filename="${req.body.name}.pdf"`)
         pdfDoc.pipe(fs.createWriteStream(filePath))
         pdfDoc.pipe(res)
         pdfDoc.fontSize(24).text(`Hello ${req.body.name}`)
