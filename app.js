@@ -3,7 +3,6 @@ const PDFDocument = require('pdfkit')
 const path = require('path')
 const fs = require('fs')
 const uuid = require('uuid')
-const { end } = require('pdfkit')
 
 const port = process.env.PORT || 3000
 
